@@ -1,6 +1,6 @@
-import TodoList from '../components/TodoList';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
+import TodoList from '../components/TodoList';
 
 jest.mock('axios');
 
@@ -13,24 +13,17 @@ describe('TodoList acceptance', () => {
         title: 'delectus aut autem',
         completed: false,
       },
-      {
-        userId: 1,
-        id: 2,
-        title: 'quis ut nam facilis et officia qui',
-        completed: false,
-      },
     ];
+    const res = {
+      data: todoList,
+    };
 
-    axios.get.mockImplementationOnce(() => {
-      Promise.resolve({
-        data: todoList,
-      });
-    });
+    axios.get.mockResolvedValue(res);
 
     render(<TodoList />);
 
-    const items = await screen.findAllByRole('listitem');
-    expect(items).toHaveLength(2);
+    const items = await screen.findAllByTestId('listitem');
+    expect(items.length).toBe(1);
   });
 
   test('should have todo title displayed on the page', async () => {
@@ -41,35 +34,21 @@ describe('TodoList acceptance', () => {
         title: 'delectus aut autem',
         completed: false,
       },
-      {
-        userId: 1,
-        id: 2,
-        title: 'quis ut nam facilis et officia qui',
-        completed: false,
-      },
     ];
-
-    axios.get.mockImplementationOnce(() => {
-      Promise.resolve({
-        data: todoList,
-      });
-    });
-
+    const res = {
+      data: todoList,
+    };
+    axios.get.mockResolvedValue(res);
     render(<TodoList />);
+
     const title1 = await screen.findByText('delectus aut autem');
-    expect(title1).toBeInTheDocument();
-    const title2 = await await screen.findByText(
-      'quis ut nam facilis et officia qui'
-    );
-    expect(title2).toBeInTheDocument();
+    expect(title1).toBeTruthy();
   });
 
   test('Should display error message when fetch request fails', async () => {
-    axios.get.mockImplementationOnce(() => {
-      Promise.reject(new Error());
-    });
+    axios.get.mockResolvedValue(Promise.reject('Wrong'));
     render(<TodoList />);
     const error = await screen.findByText(/something went wrong/i);
-    expect(error).toBeInTheDocument();
+    expect(error).toBeTruthy();
   });
 });
