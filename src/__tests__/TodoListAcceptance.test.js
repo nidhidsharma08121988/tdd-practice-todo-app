@@ -1,4 +1,4 @@
-import TodoList from '../../components/TodoList';
+import TodoList from '../components/TodoList';
 import { render, screen } from '@testing-library/react';
 import axios from 'axios';
 
