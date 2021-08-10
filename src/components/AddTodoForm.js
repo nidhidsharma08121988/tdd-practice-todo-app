@@ -12,25 +12,31 @@ const AddTodoForm = ({ addNewTask }) => {
     addNewTask(newtask);
   };
   return (
-    <div>
+    <div className='form-container'>
       <h3>Add To do</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          id='to-do-text'
-          value={todo}
-          onChange={e => setTodo(e.target.value)}
-          data-testid='input-todo'
-        />
-        <input
-          type='checkbox'
-          id='completed'
-          onChange={e => setChecked(e.target.checked)}
-        />{' '}
-        Completed
-        <button type='submit' id='submit-btn'>
-          Add to do
-        </button>
+      <form onSubmit={handleSubmit} className='my-form'>
+        <div className='form-control'>
+          <input
+            type='text'
+            id='to-do-text'
+            value={todo}
+            onChange={e => setTodo(e.target.value)}
+            data-testid='input-todo'
+          />
+        </div>
+        <div className='form-control'>
+          <input
+            type='checkbox'
+            id='completed'
+            onChange={e => setChecked(e.target.checked)}
+          />
+          Completed
+        </div>
+        <div className='form-control'>
+          <button type='submit' id='submit-btn'>
+            Add to do
+          </button>
+        </div>
       </form>
     </div>
   );
