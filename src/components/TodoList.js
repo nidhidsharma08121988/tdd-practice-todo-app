@@ -21,13 +21,18 @@ const TodoList = () => {
   }, []);
 
   return error === null ? (
-    <ul>
-      {tasks.map((task, index) => (
-        <li key={index} data-testid='listitem'>
-          {task.title}
-        </li>
-      ))}
-    </ul>
+    <div>
+      <h3>To do task List </h3>
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index} data-testid='listitem'>
+            <span className={task.completed ? 'li-completed' : ''}>
+              {task.title}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
   ) : (
     <div>Something went wrong...</div>
   );
