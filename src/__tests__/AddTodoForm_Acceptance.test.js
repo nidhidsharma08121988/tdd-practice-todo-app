@@ -7,7 +7,7 @@ describe('AddTodoForm Acceptance test', () => {
     expect(screen.queryByTestId('input-todo')).toBeTruthy();
   });
 
-  test.skip('should have a checkbox to select if the todo task is completed', () => {
+  test('should have a checkbox to select if the todo task is completed', () => {
     render(<AddTodoForm />);
     expect(screen.queryByRole('checkbox')).toBeTruthy();
   });

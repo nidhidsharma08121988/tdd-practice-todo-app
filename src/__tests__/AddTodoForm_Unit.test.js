@@ -9,4 +9,11 @@ describe('AddTodoForm Unit test', () => {
     userEvent.type(input, 'New to do');
     expect(input.value).toBe('New to do');
   });
+
+  test('Checkbox: Must be clickable', () => {
+    render(<AddTodoForm />);
+    const checkbox = screen.getByRole('checkbox');
+    userEvent.click(checkbox);
+    expect(checkbox.checked).toBeTruthy();
+  });
 });
