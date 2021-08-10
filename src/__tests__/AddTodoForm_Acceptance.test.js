@@ -12,16 +12,16 @@ describe('AddTodoForm Acceptance test', () => {
     expect(screen.queryByRole('checkbox')).toBeTruthy();
   });
 
-  test.skip('should have a button to submit the added task', () => {
+  test('should have a button to submit the added task', () => {
     render(<AddTodoForm />);
     expect(screen.queryByRole('button', { type: 'submit' })).toBeTruthy();
   });
 
-  test.skip('should call actions when the submit button is clicked', () => {
-    const mockAddTodo = jest.fn();
-    render(<AddTodoForm addTodo={mockAddTodo} />);
-    const submit = screen.getBytestId('submit');
+  test('should call actions when the submit button is clicked', () => {
+    const mockAddNewTask = jest.fn();
+    render(<AddTodoForm addNewTask={mockAddNewTask} />);
+    const submit = screen.queryByRole('button', { type: 'submit' });
     fireEvent.click(submit);
-    expect(mockAddTodo).toBeCalledTimes(1);
+    expect(mockAddNewTask).toBeCalledTimes(1);
   });
 });
