@@ -5,7 +5,9 @@ const AddTodoForm = () => {
   return (
     <div>
       <h3>Add To do</h3>
-      <form onSubmit={handleSubmit}></form>
+      <form onSubmit={handleSubmit}>
+        <input type='text' data-testid='input-todo' />
+      </form>
     </div>
   );
 };
