@@ -1,4 +1,10 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import axios from 'axios';
@@ -15,18 +21,23 @@ describe('App Acceptance', () => {
         },
       ],
     };
-    axios.get.mockResolvedValue(res);
-    act(() => {
-      render(<App />);
-    });
+    await axios.get.mockResolvedValue(res);
+    let container;
+
     // add form component
     const myInput = 'New task';
-    const input = screen.getByRole('textbox');
-    userEvent.type(input, myInput);
-    const submit = screen.getByRole('button', { type: 'submit' });
-    act(() => {
+    //replace act with waitFor in case the changes affect the state plus you want to wait for the changes
+    await waitFor(() => {
+      container = render(<App />);
+      const input = container.getByRole('textbox');
+      userEvent.type(input, myInput);
+      const submit = container.getByRole('button', { type: 'submit' });
       fireEvent.click(submit);
     });
-    expect(screen.getByText(myInput)).toBeTruthy();
+
+    //change this to spyon later
+    setTimeout(() => {
+      expect(container.getByText(myInput)).toBeTruthy();
+    }, 10000);
   });
 });

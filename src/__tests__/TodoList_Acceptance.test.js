@@ -19,6 +19,8 @@ describe('TodoList acceptance', () => {
     };
 
     axios.get.mockResolvedValue(res);
+    // this is because there is a state change
+    // in the component by our test
     act(() => {
       render(<TodoList newTask={null} />);
     });
