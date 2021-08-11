@@ -4,6 +4,7 @@ import App from '../App';
 import axios from 'axios';
 
 jest.mock('axios');
+
 describe('App Acceptance', () => {
   test('should display the added todo in the todo list', async () => {
     const res = {
@@ -14,15 +15,18 @@ describe('App Acceptance', () => {
         },
       ],
     };
-    axios.get.mockResovedValue(res);
-    render(<App />);
-    // add form component
-    const input = screen.getByRole('textbox');
-    userEvent.type(input, 'New task');
-    const submit = screen.getByRole('button', { type: 'submit' });
-    await act(() => {
-      fireEvent.click(submit);
-      expect(screen.getByText('New Task')).toBeTruthy();
+    axios.get.mockResolvedValue(res);
+    act(() => {
+      render(<App />);
     });
+    // add form component
+    const myInput = 'New task';
+    const input = screen.getByRole('textbox');
+    userEvent.type(input, myInput);
+    const submit = screen.getByRole('button', { type: 'submit' });
+    act(() => {
+      fireEvent.click(submit);
+    });
+    expect(screen.getByText(myInput)).toBeTruthy();
   });
 });

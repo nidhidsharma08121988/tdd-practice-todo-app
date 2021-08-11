@@ -8,10 +8,10 @@ const TodoList = ({ newTask }) => {
 
   const fetchTasks = async () => {
     try {
+      setError(null);
       const res = await axios.get('https://jsonplaceholder.typicode.com/todos');
       const taskList = res.data;
       setTasks(taskList);
-      setError(null);
     } catch (err) {
       setError(err);
     }
@@ -21,9 +21,9 @@ const TodoList = ({ newTask }) => {
     if (counter === 0) {
       fetchTasks();
     }
-    setCounter(counter + 1);
+    setCounter(1);
     if (newTask) {
-      setTasks([newTask, ...tasks]);
+      setTasks([...tasks, newTask]);
     }
     //eslint-disable-next-line
   }, [newTask]);

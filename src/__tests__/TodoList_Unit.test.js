@@ -1,21 +1,14 @@
-import { act, render, screen } from '@testing-library/react';
-import { json } from 'body-parser';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import TodoList from '../components/TodoList';
 import axios from 'axios';
 
 jest.mock('axios');
 describe('Todo Unit Test:', () => {
   test('Should display details from props on the screen', async () => {
-    const newTasks = [
-      {
-        title: 'todo',
-        completed: true,
-      },
-      {
-        title: 'todo 2',
-        completed: false,
-      },
-    ];
+    const newTask = {
+      title: 'todo 2',
+      completed: false,
+    };
     const res = {
       data: [
         {
@@ -25,12 +18,14 @@ describe('Todo Unit Test:', () => {
       ],
     };
     axios.get.mockResolvedValue(res);
-    await act(() => {
-      render(<TodoList newTasks={newTasks} />);
-      (async () => {
-        const items = await screen.findAllByTestId('listitems');
-        expect(items.length).toBe(3);
-      })();
+    let items;
+    await waitFor(async () => {
+      let container = await render(<TodoList newTask={newTask} />);
+      items = await container.findAllByTestId('listitem');
     });
+    // use spyon instead of this
+    setTimeout(() => {
+      expect(items.length).toBe(2);
+    }, 10000);
   });
 });

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import axios from 'axios';
 import TodoList from '../components/TodoList';
 
@@ -19,8 +19,9 @@ describe('TodoList acceptance', () => {
     };
 
     axios.get.mockResolvedValue(res);
-
-    render(<TodoList />);
+    act(() => {
+      render(<TodoList newTask={null} />);
+    });
 
     const items = await screen.findAllByTestId('listitem');
     expect(items.length).toBe(1);
