@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const TodoList = () => {
+const TodoList = ({ newTask }) => {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
+  const [counter, setCounter] = useState(0);
 
   const fetchTasks = async () => {
     try {
@@ -17,8 +18,15 @@ const TodoList = () => {
   };
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    if (counter === 0) {
+      fetchTasks();
+    }
+    setCounter(counter + 1);
+    if (newTask) {
+      setTasks([newTask, ...tasks]);
+    }
+    //eslint-disable-next-line
+  }, [newTask]);
 
   return error === null ? (
     <div>

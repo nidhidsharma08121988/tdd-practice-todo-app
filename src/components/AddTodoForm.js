@@ -10,6 +10,8 @@ const AddTodoForm = ({ addNewTask }) => {
       completed: checked,
     };
     addNewTask(newtask);
+    setTodo('');
+    setChecked(false);
   };
   return (
     <div className='form-container'>
@@ -29,6 +31,7 @@ const AddTodoForm = ({ addNewTask }) => {
             type='checkbox'
             id='completed'
             onChange={e => setChecked(e.target.checked)}
+            value={checked}
           />
           Completed
         </div>
